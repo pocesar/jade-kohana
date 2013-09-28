@@ -77,10 +77,10 @@ class Kohana_JadeView extends View {
 		// Import the view variables to local namespace
 		extract($kohana_view_data, EXTR_SKIP);
 
-		if (View::$_global_data)
+		if (self::$_global_data)
 		{
 			// Import the global view variables to local namespace
-			extract(View::$_global_data, EXTR_SKIP | EXTR_REFS);
+			extract(self::$_global_data, EXTR_SKIP | EXTR_REFS);
 		}
 
 		$rendered = self::cached($kohana_view_filename, get_defined_vars());
