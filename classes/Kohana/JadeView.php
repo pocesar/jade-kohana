@@ -43,13 +43,30 @@ class Kohana_JadeView extends View {
 		return self::capture($this->_file, $this->_data);
 	}
 
+	protected static function folder2file($filename)
+	{
+		$views = 'views' . DIRECTORY_SEPARATOR;
+
+		$filename = UTF8::transliterate_to_ascii(substr($filename, strpos($filename, $views) + strlen($views)));
+
+		$filename = strtr($filename, array(
+			'.jade' => '.php',
+			'/'     => '_',
+			'\\'    => '_',
+			'-'     => '_',
+			'~'     => '_'
+		));
+
+		return $filename;
+	}
+
 	protected static function cached($kohana_view_filename, $data)
 	{
 		$cacheTime = 0;
 
 		$folder = Kohana::$cache_dir . DIRECTORY_SEPARATOR . 'jade' . DIRECTORY_SEPARATOR;
 
-		$path = $folder . basename($kohana_view_filename, '.jade') . '.php';
+		$path = $folder . self::folder2file($kohana_view_filename);
 
 		if (file_exists($path))
 		{
