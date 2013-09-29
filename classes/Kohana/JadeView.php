@@ -137,4 +137,24 @@ class Kohana_JadeView extends View {
 
 		return $this;
 	}
+
+	public static function bind_global($key, & $value)
+	{
+		self::$_global_data[$key] =& $value;
+	}
+
+	public static function set_global($key, $value = NULL)
+	{
+		if (is_array($key))
+		{
+			foreach ($key as $key2 => $value)
+			{
+				self::$_global_data[$key2] = $value;
+			}
+		}
+		else
+		{
+			self::$_global_data[$key] = $value;
+		}
+	}
 }
